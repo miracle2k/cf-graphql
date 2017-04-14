@@ -5,6 +5,7 @@ const chunk = require('lodash.chunk');
 const qs = require('querystring');
 const fetch = require('node-fetch');
 const DataLoader = require('dataloader');
+const contentful = require('contentful-management');
 
 const CHUNK_SIZE = 100;
 
@@ -14,14 +15,21 @@ function createClient (config) {
   const base = `https://cdn.contentful.com/spaces/${config.spaceId}`;
   const headers = {Authorization: `Bearer ${config.cdaToken}`};
 
+  const managementClient = contentful.createClient({
+    accessToken: config.managementKey
+  });
+
   return {
     getContentTypes,
     createEntryLoader
   };
 
   function getContentTypes () {
-    return httpGet('/content_types', {limit: 1000})
-    .then(res => res.items);
+    // return httpGet('/content_types', {limit: 1000})
+    // .then(res => res.items);
+    const result = managementClient.getSpace(config.spaceId)
+      .then((space) => space.getContentTypes()).then(r => r.items);
+    return result;
   }
 
   function httpGet (url, params, timeline, cachedPromises) {

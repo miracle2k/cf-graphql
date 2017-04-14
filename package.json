@@ -26,6 +26,7 @@
     "lint": "eslint index.js 'src/*.js' 'example/*.js'"
   },
   "dependencies": {
+    "contentful-management": "^3.3.4",
     "dataloader": "^1.3.0",
     "graphql": "^0.9.1",
     "lodash.camelcase": "^4.3.0",
