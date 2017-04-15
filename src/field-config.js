@@ -31,6 +31,11 @@ function createFieldConfig (Type, field, resolveFn) {
       if (fieldValue !== uniqueNothing) {
         return resolveFn ? resolveFn(fieldValue, ctx) : fieldValue;
       }
+      else {
+        if (field.required) {
+          return '';
+        }
+      }
     }
   };
 }
